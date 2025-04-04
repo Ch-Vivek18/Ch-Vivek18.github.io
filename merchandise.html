@@ -1,0 +1,504 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportPulse Merchandise</title>
+    <link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPimb_InK6rf4tbExJ1aBbb-a1q-VEZFEgfw&s">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            overflow-x: hidden;
+        }
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 30px 0;
+        }
+        h1 {
+            color: #ffcc00;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        h2 {
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: normal;
+            text-align: center;
+        }
+        
+        /* Merchandise Section Styles */
+        .merchandise-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .merchandise-card {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .merchandise-card:hover {
+            transform: translateY(-10px);
+        }
+        .merchandise-img {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: white;
+            padding: 15px;
+        }
+        .merchandise-info {
+            padding: 15px;
+        }
+        .merchandise-card h3 {
+            color: #ffcc00;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .merchandise-card p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #ddd;
+        }
+        .price {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .quantity-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+        }
+        .quantity-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .quantity {
+            margin: 0 15px;
+            width: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .buy-btn {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .buy-btn:hover {
+            background: #e64a19;
+        }
+        
+        /* Cart Styles */
+        #cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff5722;
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        #cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        #cart-items {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        #cart-items h3 {
+            margin-top: 0;
+            color: #ffcc00;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            align-items: center;
+        }
+        .cart-item-info {
+            flex: 1;
+        }
+        .cart-item-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .cart-item-quantity {
+            color: #aaa;
+            font-size: 14px;
+        }
+        .cart-item-price {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-left: 20px;
+        }
+        .cart-total {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+            font-size: 18px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 10px;
+        }
+        #checkout-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        #checkout-btn:hover {
+            background: #3e8e41;
+        }
+        .remove-item {
+            color: #ff3333;
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">SportPulse</a>
+    </nav>
+
+    <div class="container">
+        <h1>OFFICIAL MERCHANDISE</h1>
+        <h2>Shop the latest sports gear and apparel</h2>
+        
+        <div class="merchandise-container">
+            <div class="merchandise-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKFVa9ZYeKY6XcdwOw-Zm5iflv6yi2RD1v3g&s" alt="India Football Jersey" class="merchandise-img">
+                <div class="merchandise-info">
+                    <h3>India Football Jersey</h3>
+                    <p>Official 2025 National Team Home Jersey</p>
+                    <p class="price">₹2,499</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                        <input type="text" class="quantity" value="1" readonly>
+                        <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addToCart(this)">ADD TO CART</button>
+                </div>
+            </div>
+            
+            <div class="merchandise-card">
+                <img src="https://images.fancode.com/media/catalog/product/i/n/india_official_adidas_one_day_international_cricket_jersey_2025_customised.jpg" alt="India Cricket Jersey" class="merchandise-img">
+                <div class="merchandise-info">
+                    <h3>Team India Cricket Jersey</h3>
+                    <p>Official 2025 World Cup Jersey</p>
+                    <p class="price">₹1,999</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                        <input type="text" class="quantity" value="1" readonly>
+                        <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addToCart(this)">ADD TO CART</button>
+                </div>
+            </div>
+            
+            <div class="merchandise-card">
+                <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQtxzAypbH1oDMT1tXCSEBzIjBWnhV-Q2h4t5AigTfz8qppsO1GpZTDn_5W0jRRBz6EwsMN5P_R1EtyjAB0R2AYENO2dyDqOY15Lkp-kJMk&usqp=CAE" alt="Goalkeeping Gloves" class="merchandise-img">
+                <div class="merchandise-info">
+                    <h3>Goalkeeping Gloves</h3>
+                    <p>Professional Grade GK Gloves</p>
+                    <p class="price">₹3,999</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                        <input type="text" class="quantity" value="1" readonly>
+                        <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addToCart(this)">ADD TO CART</button>
+                </div>
+            </div>
+            
+            <div class="merchandise-card">
+                <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcScRnwrLch-ZADbrV-wXBDr54Z-99oVEM9ck_anBN4LsSKloWth4sYeZKEA8TgaAu9O9BCMLsyvTRYVl38IF0HDtuxp49dNaV0RiB5uNJknfe9EKa6XX2PO&usqp=CAE" alt="Cricket Bat" class="merchandise-img">
+                <div class="merchandise-info">
+                    <h3>Premium Cricket Bat</h3>
+                    <p>MRF Genius Grand Edition</p>
+                    <p class="price">₹5,499</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                        <input type="text" class="quantity" value="1" readonly>
+                        <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addToCart(this)">ADD TO CART</button>
+                </div>
+            </div>
+            
+            <div class="merchandise-card">
+                <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSWFVi15xTm_u49AXeHiu-BVJxTp4dGHbY4aU26drPdS0wBvWrtnhicO4roppLHGoGtRu_6dzr6P6Sh3EoUzshO_waawXHszmhYYKzjNYfS-2eIfOGzk2A-" alt="Football" class="merchandise-img">
+                <div class="merchandise-info">
+                    <h3>FIFA Official Match Ball</h3>
+                    <p>2025 World Cup Edition</p>
+                    <p class="price">₹3,299</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                        <input type="text" class="quantity" value="1" readonly>
+                        <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addToCart(this)">ADD TO CART</button>
+                </div>
+            </div>
+            
+            <div class="merchandise-card">
+                <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSbKhJR8IWZP3z0TQ7m1YIJV1-b3RlW5IvXcEKaePAWf09VoQPoHxFGX9XI6tMzb20NzTHXjnVCoMnlCaji7fNc6OZvUMJGGhYAHSFYH3OMrdEZEy-d1AhR" alt="Training Kit" class="merchandise-img">
+                <div class="merchandise-info">
+                    <h3>Training Kit Bundle</h3>
+                    <p>Includes cones, agility ladder & more</p>
+                    <p class="price">₹2,799</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                        <input type="text" class="quantity" value="1" readonly>
+                        <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addToCart(this)">ADD TO CART</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Icon -->
+    <div id="cart-icon" onclick="toggleCart()">
+        🛒
+        <span id="cart-count">0</span>
+    </div>
+
+    <!-- Shopping Cart Dropdown -->
+    <div id="cart-items">
+        <h3>YOUR SHOPPING CART</h3>
+        <div id="cart-content"></div>
+        <div class="cart-total">Total: ₹<span id="cart-total">0</span></div>
+        <button id="checkout-btn" onclick="checkout()">PROCEED TO CHECKOUT</button>
+    </div>
+
+    <footer style="background: rgba(0, 0, 0, 0.8); color: white; text-align: center; padding: 20px; margin-top: 40px;">
+        <p>&copy; 2025 SportPulse. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        let cart = [];
+        
+        function updateQuantity(button, change) {
+            const quantityInput = button.parentElement.querySelector('.quantity');
+            let quantity = parseInt(quantityInput.value);
+            quantity += change;
+            if (quantity < 1) quantity = 1;
+            quantityInput.value = quantity;
+        }
+        
+        function addToCart(button) {
+            const card = button.closest('.merchandise-card');
+            const name = card.querySelector('h3').textContent;
+            const price = parseInt(card.querySelector('.price').textContent.replace(/[^0-9]/g, ''));
+            const quantity = parseInt(card.querySelector('.quantity').value);
+            const image = card.querySelector('.merchandise-img').src;
+            
+            // Check if item already in cart
+            const existingItemIndex = cart.findIndex(item => item.name === name);
+            if (existingItemIndex >= 0) {
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                cart.push({ name, price, quantity, image });
+            }
+            
+            updateCartDisplay();
+            showCartNotification(name, quantity);
+        }
+        
+        function updateCartDisplay() {
+            const cartContent = document.getElementById('cart-content');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            
+            cartContent.innerHTML = '';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-quantity">Qty: ${item.quantity}</div>
+                    </div>
+                    <div class="cart-item-price">₹${itemTotal.toLocaleString()}</div>
+                    <div class="remove-item" onclick="removeFromCart(${index})">×</div>
+                `;
+                cartContent.appendChild(itemElement);
+            });
+            
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartTotal.textContent = total.toLocaleString();
+        }
+        
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+        
+        function toggleCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.style.display = cartItems.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function showCartNotification(name, quantity) {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'rgba(0,0,0,0.9)';
+            notification.style.color = 'white';
+            notification.style.padding = '15px';
+            notification.style.borderRadius = '5px';
+            notification.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+            notification.style.zIndex = '1002';
+            notification.style.animation = 'fadeIn 0.5s';
+            notification.innerHTML = `Added ${quantity} ${quantity > 1 ? 'items' : 'item'} of <strong>${name}</strong> to cart`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.5s';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+        
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            const orderDetails = cart.map(item => 
+                `${item.name} (Qty: ${item.itemQuantity}) - ₹${item.price * item.quantity}`
+            ).join('\n');
+            
+            alert(`ORDER CONFIRMED!\n\nItems:\n${orderDetails}\n\nTotal Items: ${itemCount}\nTotal Amount: ₹${total.toLocaleString()}\n\nThank you for shopping with SportPulse!`);
+            
+            // Reset cart
+            cart = [];
+            updateCartDisplay();
+            toggleCart();
+            
+            // Reset all quantities to 1
+            document.querySelectorAll('.quantity').forEach(input => {
+                input.value = 1;
+            });
+        }
+        
+        // Close cart when clicking outside
+        document.addEventListener('click', function(event) {
+            const cartItems = document.getElementById('cart-items');
+            const cartIcon = document.getElementById('cart-icon');
+            
+            if (!cartItems.contains(event.target) && !cartIcon.contains(event.target)) {
+                cartItems.style.display = 'none';
+            }
+        });
+        
+        // Add some CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
